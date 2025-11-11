@@ -1,29 +1,16 @@
 {
-  "name": "nba-card-classifier",
-  "version": "0.1.0",
+  "name": "sprintify",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "@ai-sdk/openai": "^2.0.42",
-    "@ai-sdk/react": "^2.0.59",
-    "ai": "^5.0.59",
-    "next": "15.5.4",
-    "openai": "^6.0.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "zod": "^4.1.11"
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "start": "pnpm -r start"
   },
   "devDependencies": {
     "@types/node": "^20.19.19",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "prettier": "^3.1.0",
+    "eslint": "^8.54.0"
   }
 }

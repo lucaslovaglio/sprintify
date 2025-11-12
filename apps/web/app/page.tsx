@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ProjectState } from "./lib/schemas";
+import type { ProjectState } from "../lib/schemas";
 import { Upload } from "./components/Upload";
 import { ClarifyPanel } from "./components/ClarifyPanel";
 import { TicketsBoard } from "./components/TicketsBoard";
@@ -70,7 +70,7 @@ export default function Home() {
             if (line.startsWith("data: ")) {
               try {
                 const event = JSON.parse(line.slice(6));
-                
+
                 // Handle different event types
                 if (event.type === "status") {
                   addLog(event.message);
@@ -84,7 +84,7 @@ export default function Home() {
                 } else if (event.type === "complete") {
                   setProjectState(event.data);
                   addLog("🎉 Tickets generated successfully!");
-                  
+
                   if (event.data.clarifications.length > 0) {
                     addLog(`Need ${event.data.clarifications.length} clarifications`);
                     setState("clarify");

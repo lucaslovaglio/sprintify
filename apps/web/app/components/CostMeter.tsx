@@ -1,6 +1,6 @@
 "use client";
 
-import type { Cost } from "@/lib/schemas";
+import type { Cost } from "../../lib/schemas";
 
 interface CostMeterProps {
   cost: Cost;

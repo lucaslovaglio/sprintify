@@ -71,7 +71,7 @@ export default function Home() {
             if (line.startsWith("data: ")) {
               try {
                 const event = JSON.parse(line.slice(6));
-                
+
                 // Handle different event types
                 if (event.type === "status") {
                   addLog(event.message);
@@ -108,7 +108,13 @@ export default function Home() {
                   setGeneratingTickets(false);
                   setCurrentBatch(null);
                   addLog("🎉 Tickets generated successfully!");
-                  setState("tickets");
+
+                  if (event.data.clarifications.length > 0) {
+                    addLog(`Need ${event.data.clarifications.length} clarifications`);
+                    setState("clarify");
+                  } else {
+                    setState("tickets");
+                  }
                 }
               } catch (e) {
                 console.error("Failed to parse event:", e);

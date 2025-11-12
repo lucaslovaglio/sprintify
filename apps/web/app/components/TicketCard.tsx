@@ -1,6 +1,6 @@
 "use client";
 
-import type { Ticket } from "@/lib/schemas";
+import type { Ticket } from "../../lib/schemas";
 
 interface TicketCardProps {
   ticket: Ticket;

@@ -8,12 +8,10 @@ interface TicketsBoardProps {
   projectName?: string;
 }
 
-const priorityOrder: Record<string, number> = { P1: 1, P2: 2, P3: 3 };
-
 export function TicketsBoard({ tickets, projectName }: TicketsBoardProps) {
-  // Sort tickets by priority (P1 first, then P2, then P3)
+  // Sort tickets by ID
   const sortedTickets = [...tickets].sort((a, b) => {
-    return (priorityOrder[a.priority] || 999) - (priorityOrder[b.priority] || 999);
+    return a.id.localeCompare(b.id);
   });
 
   const p1Count = tickets.filter((t) => t.priority === "P1").length;
@@ -52,7 +50,7 @@ export function TicketsBoard({ tickets, projectName }: TicketsBoardProps) {
         </div>
       </div>
 
-      {/* Grid of Tickets (sorted by priority) */}
+      {/* Grid of Tickets (sorted by ID) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {sortedTickets.map((ticket) => (
           <TicketCard key={ticket.id} ticket={ticket} />

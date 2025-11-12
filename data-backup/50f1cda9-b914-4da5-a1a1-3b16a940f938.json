@@ -1,0 +1,264 @@
+{
+  "id": "50f1cda9-b914-4da5-a1a1-3b16a940f938",
+  "rawText": "Proyecto CIUDAD SELFIE \nPropuesta de Desarrollo \n1. Resumen Ejecutivo \nCiudad Selfie es una plataforma digital que combina experiencia turística, \ntecnología y participación ciudadana. \nSu objetivo es fomentar el turismo, la cultura y el comercio local en la Ciudad de \nBuenos Aires mediante una dinámica interactiva: los usuarios recorren distintos \npuntos emblemáticos, escanean los QR de los tótems, suben su selfie y obtienen \npuntos, logros y beneficios que pueden canjear en locales adheridos. \nLa propuesta busca revitalizar el turismo interno, conectar a los visitantes con los \nbarrios porteños y fortalecer la identidad cultural de la ciudad a través de una \nexperiencia moderna, gamificada y accesible. \n2. Descripción General del Proyecto \n2.1 Descripción general \nEl proyecto consiste en una plataforma web accesible desde cualquier dispositivo \nmóvil. \nContará con dos modalidades: \n● Modo visitante: libre acceso para explorar lugares, leer información y \ndescubrir circuitos turísticos. \n \n● Modo usuario (autenticado con Google): registro de visitas, logros, desafíos, \nrankings y recompensas. \n \nLa app solicitará permiso de ubicación únicamente al validar un logro, \nasegurando que el usuario se encuentre efectivamente en el punto visitado. \n \n \n \nCiudad Selfie - Propuesta de Desarrollo                                  \n1\n \n\n \n \n2.2 Dinámica de uso \nCada punto turístico contará con un tótem selfie con código QR. \nEl proceso de experiencia es el siguiente: \n1. El visitante llega al punto, posiciona su dispositivo en el soporte del tótem y \nse toma una selfie \n2. Escanea el QR del tótem e ingresa a la plataforma. \n \n3. La app válida su ubicación y le otorga puntos base. \n \n4. Se desbloquea una trivia cultural del lugar visitado. \n \n5. Si el usuario sube su selfie en el punto, gana puntos adicionales. \n \n6. La app le propone un challenge que incluye: \n \n○ Un punto turístico (tótem). \n \n○ Un local gastronómico cercano. \n \n○ Un emprendimiento o tienda local. \n \n7. Al completar el circuito, obtiene un logro, que va a poder ver en su \npasaporte digital,  y puntos, que va a poder canjear por beneficios en los \ncomercios asociados. \n \n \n2.3 Personalización \nLa plataforma seleccionará los locales adheridos de cada circuito en función de: \n● Preferencias y comportamiento previo del usuario. \n \n● Calificaciones de otros visitantes. \n \n● Balance de afluencia para evitar concentraciones de público. \n \n \n \n \nCiudad Selfie - Propuesta de Desarrollo                                  \n2\n \n\n \n \n2.4 Diseño y estructura \nLa experiencia se centrará en un pasaporte digital, con diseño visual inspirado en \nun pasaporte o álbum de figuritas. \nCada lugar visitado genera un sello visual y se muestra en un mapa interactivo \ncon fotos, ratings y comentarios de otros usuarios. \nEl sistema incluirá: \n● Rachas: visitas consecutivas cada 15 días para multiplicar puntos. \n \n● Niveles de usuario: categorías como Explorador, Aventurero y Leyenda (que \nle van a permitir acceder a beneficios exclusivos). \n \n● Canje de puntos: sección de descuentos y beneficios exclusivos. \n \n2.5 Backoffice administrativo \nHabrá un panel de control para: \n● Alta de locales adheridos y gestión de beneficios. \n \n● Visualización de métricas: usuarios activos, zonas más visitadas, ratings y \ncantidad de canjes. \n \n● Análisis del impacto turístico y comercial del programa. \n \n2.6 Etapas futuras \n● Incorporación de dispositivos NFC en los locales para simular el “sellado” \ndel pasaporte. \n \n● Eventos especiales con mayor puntaje (por ejemplo, “Ruta del Tango”, \n“Sabores Porteños”). \n \n● Challenges patrocinados por marcas con logros personalizados y premios \nexclusivos. \n \n \n \nCiudad Selfie - Propuesta de Desarrollo                                  \n3\n \n\n \n \n3. Beneficios \nPara la Ciudad de Buenos Aires \n● Promueve el turismo interno y la circulación entre barrios. \n \n● Fomenta la difusión cultural y patrimonial. \n \n● Proporciona métricas en tiempo real sobre flujo turístico. \n \n● Refuerza la marca ciudad a través de innovación y participación. \n \nPara los Comercios y Emprendedores \n● Aumento del tráfico de visitantes y potenciales clientes. \n \n● Mayor visibilidad dentro del circuito turístico. \n \n● Posibilidad de promociones segmentadas por zona o tipo de usuario. \n \nPara los Usuarios \n● Experiencia divertida, gamificada y social. \n \n● Descubrimiento de lugares nuevos con recompensas reales. \n \n● Pertenencia a una comunidad activa de exploradores urbanos. \n \n \n \n \n \n \n \nCiudad Selfie - Propuesta de Desarrollo                                  \n4",
+  "requirements": {
+    "projectName": "CIUDAD SELFIE",
+    "summary": "Ciudad Selfie es una plataforma digital que fomenta el turismo, la cultura y el comercio local en Buenos Aires a través de una experiencia interactiva y gamificada. Los usuarios visitan puntos emblemáticos, escanean QRs, suben selfies y obtienen puntos y beneficios.",
+    "goals": [
+      "Fomentar el turismo, la cultura y el comercio local en Buenos Aires",
+      "Conectar a los visitantes con los barrios porteños",
+      "Fortalecer la identidad cultural de la ciudad"
+    ],
+    "constraints": [],
+    "features": [
+      "Modo visitante para explorar lugares y circuitos turísticos",
+      "Modo usuario autenticado para registro de visitas, logros y recompensas",
+      "Ubicación basada en permisos para validar logros",
+      "Dinámica de uso con QR y selfies para obtener puntos",
+      "Trivia cultural y challenges por completar circuitos",
+      "Personalización de circuitos basada en preferencias y comportamiento del usuario",
+      "Pasaporte digital con sellos visuales de lugares visitados",
+      "Sistema de rachas, niveles de usuario y canje de puntos",
+      "Backoffice administrativo para gestión de locales y análisis de métricas",
+      "Futuras incorporaciones de NFC y eventos especiales"
+    ],
+    "stakeholders": [
+      "Usuarios turistas y locales",
+      "Comercios y emprendedores locales",
+      "Administradores de la plataforma"
+    ],
+    "techHints": [
+      "Plataforma web accesible desde dispositivos móviles",
+      "Autenticación con Google",
+      "Uso de QR y NFC"
+    ],
+    "scope": "El proyecto se centra en el desarrollo de una plataforma web para mejorar la experiencia turística en Buenos Aires, excluyendo la creación de contenido turístico o cultural específico."
+  },
+  "clarifications": [
+    "What is the project budget or cost constraint? (e.g., $X/month for hosting, $Y total budget)",
+    "What is the target timeline or deadline for this project? (e.g., launch in 6 weeks, MVP in 3 months)",
+    "What is the expected user scale or traffic? (e.g., 100 users, 10K daily active users, 1M page views/month)"
+  ],
+  "answers": {},
+  "tickets": [
+    {
+      "id": "TICKET-001",
+      "title": "Set up project repository",
+      "description": "Create a version-controlled repository to host the Ciudad Selfie platform codebase. This will enable collaborative development and version tracking.",
+      "acceptanceCriteria": [
+        "Repository is accessible to all team members",
+        "Main branches for development, staging, and production are established"
+      ],
+      "effortPoints": 1,
+      "useCase": "Project setup",
+      "priority": "P1",
+      "labels": [
+        "infrastructure"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TICKET-002",
+      "title": "Implement user authentication via Google",
+      "description": "Develop a user authentication system using Google OAuth to allow users to sign in or sign up. This is crucial for personalizing the user experience and securing user data.",
+      "acceptanceCriteria": [
+        "Given a user chooses to sign in, When they select Google OAuth, Then they are authenticated and logged into the platform",
+        "New users are prompted to authorize the application and are registered upon consent"
+      ],
+      "effortPoints": 5,
+      "useCase": "Modo usuario autenticado",
+      "priority": "P1",
+      "labels": [
+        "backend",
+        "authentication",
+        "security"
+      ],
+      "dependencies": [
+        "TICKET-001"
+      ]
+    },
+    {
+      "id": "TICKET-003",
+      "title": "Create visitor and authenticated user modes",
+      "description": "Implement functionality for a visitor mode that allows exploring without sign-in, and an authenticated mode that enables personalization and tracking of visits, achievements, and rewards.",
+      "acceptanceCriteria": [
+        "Given a user accesses Ciudad Selfie, When they are not signed in, Then they can explore in visitor mode",
+        "Given a user signs in, When they access Ciudad Selfie, Then they enter authenticated user mode with access to personalized features"
+      ],
+      "effortPoints": 8,
+      "useCase": "Modo visitante y usuario autenticado",
+      "priority": "P1",
+      "labels": [
+        "frontend",
+        "backend",
+        "authentication"
+      ],
+      "dependencies": [
+        "TICKET-002"
+      ]
+    },
+    {
+      "id": "TICKET-004",
+      "title": "Implement QR scanning and selfie upload feature",
+      "description": "Develop a feature that allows users to scan QR codes at tourist spots and upload selfies to validate visits. This gamifies the experience and encourages exploration.",
+      "acceptanceCriteria": [
+        "Given a user is at a tourist spot, When they scan the QR code, Then they are prompted to upload a selfie",
+        "Given a selfie is uploaded, When the upload is successful, Then the visit is registered and points are awarded"
+      ],
+      "effortPoints": 8,
+      "useCase": "Dinámica de uso con QR y selfies",
+      "priority": "P1",
+      "labels": [
+        "frontend",
+        "backend",
+        "QR",
+        "media"
+      ],
+      "dependencies": [
+        "TICKET-003"
+      ]
+    },
+    {
+      "id": "TICKET-005",
+      "title": "Develop location-based achievement validation",
+      "description": "Create a system that uses geolocation permissions to validate user achievements at specific locations. This ensures that rewards are earned genuinely by visiting places.",
+      "acceptanceCriteria": [
+        "Given a user attempts to claim an achievement, When their location matches the designated spot, Then the achievement is validated",
+        "Location spoofing prevention measures are implemented"
+      ],
+      "effortPoints": 8,
+      "useCase": "Ubicación basada en permisos",
+      "priority": "P1",
+      "labels": [
+        "backend",
+        "security",
+        "geolocation"
+      ],
+      "dependencies": [
+        "TICKET-003"
+      ]
+    },
+    {
+      "id": "TICKET-006",
+      "title": "Implement trivia and challenges feature",
+      "description": "Develop a series of cultural trivia and challenges that users can complete for additional points. This will engage users and encourage learning about Buenos Aires culture.",
+      "acceptanceCriteria": [
+        "Given a user selects a trivia or challenge, When they complete it successfully, Then they are awarded points",
+        "Trivia and challenges are periodically updated to maintain engagement"
+      ],
+      "effortPoints": 5,
+      "useCase": "Trivia cultural y challenges",
+      "priority": "P2",
+      "labels": [
+        "frontend",
+        "backend",
+        "content"
+      ],
+      "dependencies": [
+        "TICKET-003"
+      ]
+    },
+    {
+      "id": "TICKET-007",
+      "title": "Create personalized circuit recommendations",
+      "description": "Implement an algorithm that suggests personalized circuits based on user preferences and past behavior. This will enhance the user experience by tailoring the exploration.",
+      "acceptanceCriteria": [
+        "Given a user has interacted with the platform, When they access the circuit recommendation section, Then they see personalized circuit suggestions",
+        "User feedback on recommendations is collected to refine future suggestions"
+      ],
+      "effortPoints": 8,
+      "useCase": "Personalización de circuitos",
+      "priority": "P2",
+      "labels": [
+        "backend",
+        "AI/ML",
+        "personalization"
+      ],
+      "dependencies": [
+        "TICKET-003"
+      ]
+    },
+    {
+      "id": "TICKET-008",
+      "title": "Implement digital passport feature",
+      "description": "Develop a digital passport that collects visual stamps for each place visited. This serves as a fun record of achievements and encourages further exploration.",
+      "acceptanceCriteria": [
+        "Given a user visits a new place and validates the visit, When the visit is registered, Then a visual stamp is added to their digital passport",
+        "The digital passport is accessible and shareable by the user"
+      ],
+      "effortPoints": 5,
+      "useCase": "Pasaporte digital",
+      "priority": "P2",
+      "labels": [
+        "frontend",
+        "backend",
+        "UI/UX"
+      ],
+      "dependencies": [
+        "TICKET-004"
+      ]
+    },
+    {
+      "id": "TICKET-009",
+      "title": "Develop streaks, user levels, and points exchange system",
+      "description": "Create a system for tracking user streaks, levels, and a mechanism for exchanging points for rewards. This will motivate users to continue exploring and engaging with the platform.",
+      "acceptanceCriteria": [
+        "Given a user completes daily tasks, When they maintain a streak, Then rewards are increased",
+        "Users can view their level and exchange points for rewards"
+      ],
+      "effortPoints": 8,
+      "useCase": "Sistema de rachas, niveles y canje",
+      "priority": "P2",
+      "labels": [
+        "backend",
+        "gamification"
+      ],
+      "dependencies": [
+        "TICKET-003",
+        "TICKET-004"
+      ]
+    },
+    {
+      "id": "TICKET-010",
+      "title": "Set up administrative backoffice",
+      "description": "Develop a backoffice interface for administrators to manage tourist spots, challenges, and analyze user metrics. This will help in maintaining the platform and making informed decisions.",
+      "acceptanceCriteria": [
+        "Administrators can add, edit, or remove tourist spots and challenges",
+        "Administrators have access to analytics regarding user engagement and platform usage"
+      ],
+      "effortPoints": 8,
+      "useCase": "Backoffice administrativo",
+      "priority": "P3",
+      "labels": [
+        "backend",
+        "admin",
+        "analytics"
+      ],
+      "dependencies": [
+        "TICKET-001"
+      ]
+    }
+  ],
+  "justification": {
+    "pros": [
+      "Breaking down the project into manageable tickets ensures focused and efficient development efforts.",
+      "Prioritizing tickets allows the team to focus on critical features first, ensuring the platform can launch with core functionalities.",
+      "Including dependencies helps in planning the development workflow and mitigating potential blockers."
+    ],
+    "cons": [
+      "The effort points are estimates and actual development time may vary, potentially affecting project timelines.",
+      "Dependencies may create bottlenecks if the tickets they depend on are delayed."
+    ],
+    "alternatives": [
+      "Grouping related features into epic tickets could simplify initial planning but might obscure detailed tasks and dependencies.",
+      "Using a Kanban approach for continuous delivery without fixed sprints could offer more flexibility but might make it harder to prioritize tasks."
+    ]
+  },
+  "cost": {
+    "tokensIn": 0,
+    "tokensOut": 0,
+    "usd": 0
+  },
+  "createdAt": "2025-11-11T17:51:09.302Z",
+  "updatedAt": "2025-11-11T17:51:09.302Z"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "32d1e2e0-2eb4-44f4-97b1-933ced4f05c8",
+  "rawText": "Quiero comprar un kiosko",
+  "clarifications": [],
+  "answers": {},
+  "tickets": [],
+  "cost": {
+    "tokensIn": 0,
+    "tokensOut": 0,
+    "usd": 0
+  },
+  "createdAt": "2025-11-11T18:58:44.831Z",
+  "updatedAt": "2025-11-11T18:58:44.831Z"
+}

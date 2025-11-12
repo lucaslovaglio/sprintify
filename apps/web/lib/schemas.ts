@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Re-export types from agent package
-export { type Ticket, type Requirements, type ProjectState, type Justification, type Cost } from "agent/src/types";
+export { type Ticket, type Requirements, type ProjectState, type Cost } from "agent/src/types";
 
 // Ticket schema with strict validation
 export const TicketSchema = z.object({
@@ -35,13 +35,6 @@ export const RequirementsSchema = z.object({
   scope: z.string().optional(),
 });
 
-// Justification schema
-export const JustificationSchema = z.object({
-  pros: z.array(z.string()),
-  cons: z.array(z.string()),
-  alternatives: z.array(z.string()),
-});
-
 // Cost schema
 export const CostSchema = z.object({
   tokensIn: z.number(),
@@ -54,10 +47,7 @@ export const ProjectStateSchema = z.object({
   id: z.string(),
   rawText: z.string(),
   requirements: RequirementsSchema,
-  clarifications: z.array(z.string()),
-  answers: z.record(z.string(), z.string()),
   tickets: z.array(TicketSchema),
-  justification: JustificationSchema,
   cost: CostSchema,
   createdAt: z.string(),
   updatedAt: z.string(),
@@ -68,11 +58,6 @@ export const GenerateRequestSchema = z.object({
   text: z.string().optional(),
   fileData: z.string().optional(), // base64 encoded
   fileName: z.string().optional(),
-});
-
-export const ClarifyRequestSchema = z.object({
-  projectId: z.string(),
-  answers: z.record(z.string(), z.string()),
 });
 
 export const EditRequestSchema = z.object({

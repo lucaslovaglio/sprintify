@@ -3,12 +3,11 @@
 import { useState } from "react";
 import type { ProjectState } from "../lib/schemas";
 import { Upload } from "./components/Upload";
-import { ClarifyPanel } from "./components/ClarifyPanel";
 import { TicketsBoard } from "./components/TicketsBoard";
 import { ChatEditor } from "./components/ChatEditor";
 import { CostMeter } from "./components/CostMeter";
 
-type AppState = "upload" | "clarify" | "tickets";
+type AppState = "upload" | "tickets";
 
 export default function Home() {
   const [state, setState] = useState<AppState>("upload");
@@ -16,6 +15,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [logs, setLogs] = useState<string[]>([]);
+  const [generatingTickets, setGeneratingTickets] = useState(false);
+  const [currentBatch, setCurrentBatch] = useState<{ current: number; total: number } | null>(null);
 
   const addLog = (message: string) => {
     setLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] ${message}`]);
@@ -74,15 +75,38 @@ export default function Home() {
                 // Handle different event types
                 if (event.type === "status") {
                   addLog(event.message);
+                  
+                  // Detect when ticket generation starts
+                  if (event.message.includes("Generating tickets")) {
+                    setGeneratingTickets(true);
+                  }
                 } else if (event.type === "progress") {
                   addLog(event.message);
+                  
+                  // Update batch info if available
+                  if (event.data?.batch && event.data?.totalBatches) {
+                    setCurrentBatch({
+                      current: event.data.batch,
+                      total: event.data.totalBatches
+                    });
+                  }
+                  
+                  // If message indicates all tickets are done
+                  if (event.message.includes("All") && event.message.includes("ticket(s) generated")) {
+                    setGeneratingTickets(false);
+                    setCurrentBatch(null);
+                  }
                 } else if (event.type === "error") {
                   hasError = true;
                   errorMessage = event.message;
                   setError(event.message);
                   addLog(event.message);
+                  setGeneratingTickets(false);
+                  setCurrentBatch(null);
                 } else if (event.type === "complete") {
                   setProjectState(event.data);
+                  setGeneratingTickets(false);
+                  setCurrentBatch(null);
                   addLog("🎉 Tickets generated successfully!");
 
                   if (event.data.clarifications.length > 0) {
@@ -108,52 +132,10 @@ export default function Home() {
         const result = await response.json();
         setProjectState(result);
         addLog("✅ Requirements extracted successfully");
-        addLog(`Found ${result.tickets.length} tickets`);
-
-        if (result.clarifications.length > 0) {
-          addLog(`Need ${result.clarifications.length} clarifications`);
-          setState("clarify");
-        } else {
-          addLog("🎉 Tickets generated successfully!");
-          setState("tickets");
-        }
+        addLog(`Found ${result.tickets?.length || 0} tickets`);
+        addLog("🎉 Tickets generated successfully!");
+        setState("tickets");
       }
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Unknown error";
-      setError(errorMessage);
-      addLog(`❌ Error: ${errorMessage}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleClarify = async (answers: Record<string, string>) => {
-    if (!projectState) return;
-
-    setIsLoading(true);
-    setError(null);
-    addLog("Processing clarifications...");
-
-    try {
-      const response = await fetch("/api/clarify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          projectId: projectState.id,
-          answers,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to process clarifications");
-      }
-
-      const result = await response.json();
-      setProjectState(result);
-      addLog("✅ Clarifications processed");
-      addLog(`Generated ${result.tickets.length} tickets`);
-      setState("tickets");
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
       setError(errorMessage);
@@ -241,22 +223,84 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">
-            🚀 Sprintify
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Sidebar */}
+      <aside className="w-80 bg-gray-900 text-gray-100 flex flex-col fixed h-screen overflow-y-auto">
+        {/* App Name/Logo */}
+        <div className="p-6 border-b border-gray-800">
+          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+            Sprintify
           </h1>
-          <p className="text-gray-600 mt-1">
-            AI-powered development ticket generation
+          <p className="text-gray-400 text-sm mt-1">
+            AI-powered ticket generation
           </p>
         </div>
-      </header>
+
+        {/* Process Status */}
+        {isLoading && (
+          <div className="p-4 bg-gray-800 border-b border-gray-700">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="animate-spin h-4 w-4 border-2 border-green-400 border-t-transparent rounded-full"></div>
+              <span className="font-semibold text-green-400">
+                {generatingTickets && currentBatch 
+                  ? `Batch ${currentBatch.current}/${currentBatch.total}`
+                  : "Processing..."}
+              </span>
+            </div>
+            {generatingTickets && currentBatch && (
+              <div className="mt-2">
+                <div className="w-full bg-gray-700 rounded-full h-1.5">
+                  <div 
+                    className="bg-green-500 h-1.5 rounded-full transition-all duration-500"
+                    style={{ width: `${(currentBatch.current / currentBatch.total) * 100}%` }}
+                  ></div>
+                </div>
+                <p className="text-xs text-gray-400 mt-1">
+                  {Math.round((currentBatch.current / currentBatch.total) * 100)}% completado
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Logs */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-4">
+            <h2 className="text-xs uppercase font-semibold text-gray-500 mb-3">Process Log</h2>
+            {logs.length === 0 ? (
+              <p className="text-sm text-gray-500 italic">No activity yet...</p>
+            ) : (
+              <div className="space-y-1.5 font-mono text-xs">
+                {logs.map((log, i) => (
+                  <div key={i} className="text-green-400 animate-fadeIn break-words">
+                    {log}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Footer Info */}
+        {projectState && (
+          <div className="p-4 border-t border-gray-800 bg-gray-800">
+            <div className="text-xs space-y-1">
+              <div className="flex justify-between text-gray-400">
+                <span>Tickets:</span>
+                <span className="text-white font-semibold">{projectState.tickets?.length || 0}</span>
+              </div>
+              <div className="flex justify-between text-gray-400">
+                <span>Cost:</span>
+                <span className="text-green-400 font-semibold">${projectState.cost?.usd?.toFixed(4) || '0.0000'}</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </aside>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="space-y-6">
+      <main className="flex-1 ml-80 p-8">
+        <div className="max-w-7xl mx-auto space-y-6">
           {/* Error Display */}
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -265,16 +309,40 @@ export default function Home() {
             </div>
           )}
 
-          {/* Progress Logs (show during loading) */}
-          {isLoading && logs.length > 0 && (
-            <div className="bg-gray-900 text-green-400 p-6 rounded-lg font-mono text-sm space-y-1 shadow-lg">
-              <div className="flex items-center gap-2 mb-3 pb-3 border-b border-gray-700">
-                <div className="animate-spin h-4 w-4 border-2 border-green-400 border-t-transparent rounded-full"></div>
-                <span className="font-semibold">Processing...</span>
+          {/* Ticket Generation Progress with Skeletons */}
+          {generatingTickets && currentBatch && (
+            <div className="bg-white p-6 rounded-lg shadow-md border border-blue-200">
+              <div className="mb-4">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Generando Tickets - Sección {currentBatch.current}/{currentBatch.total}
+                  </h3>
+                  <span className="text-sm text-gray-600">
+                    {Math.round((currentBatch.current / currentBatch.total) * 100)}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                    style={{ width: `${(currentBatch.current / currentBatch.total) * 100}%` }}
+                  ></div>
+                </div>
               </div>
-              {logs.map((log, i) => (
-                <div key={i} className="animate-fadeIn">{log}</div>
-              ))}
+              
+              {/* Skeleton Tickets */}
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="animate-pulse bg-gray-100 rounded-lg p-4 border border-gray-200">
+                    <div className="h-4 bg-gray-300 rounded w-3/4 mb-3"></div>
+                    <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-5/6 mb-3"></div>
+                    <div className="flex gap-2 mt-3">
+                      <div className="h-6 bg-gray-200 rounded-full w-16"></div>
+                      <div className="h-6 bg-gray-200 rounded-full w-12"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
@@ -283,20 +351,11 @@ export default function Home() {
             <Upload onGenerate={handleGenerate} isLoading={isLoading} />
           )}
 
-          {/* Clarify State */}
-          {state === "clarify" && projectState && (
-            <ClarifyPanel
-              questions={projectState.clarifications}
-              onSubmit={handleClarify}
-              isLoading={isLoading}
-            />
-          )}
-
           {/* Tickets State */}
-          {state === "tickets" && projectState && (
+          {state === "tickets" && projectState && projectState.tickets && (
             <>
               {/* Action Bar */}
-              <div className="flex flex-wrap gap-4 items-center justify-between bg-white p-4 rounded-lg shadow-sm">
+              <div className="flex flex-wrap gap-3 items-center justify-between bg-white p-4 rounded-lg border border-gray-200">
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleExport("json")}
@@ -317,79 +376,28 @@ export default function Home() {
                     Export Markdown
                   </button>
                 </div>
-                <div className="flex gap-2">
-                  <CostMeter cost={projectState.cost} />
-                  <button
-                    onClick={handleReset}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
-                  >
-                    New Project
-                  </button>
-                </div>
+                <button
+                  onClick={handleReset}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  New Project
+                </button>
               </div>
-
-              {/* Tickets Board */}
-              <TicketsBoard
-                tickets={projectState.tickets}
-                projectName={projectState.requirements.projectName}
-              />
 
               {/* Chat Editor */}
               <ChatEditor onEdit={handleEdit} isLoading={isLoading} />
 
-              {/* Justification */}
-              {projectState.justification && (
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                  <h3 className="text-lg font-semibold mb-4">📊 Justification</h3>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <div>
-                      <h4 className="font-medium text-green-700 mb-2">✅ Pros</h4>
-                      <ul className="space-y-1 text-sm text-gray-700">
-                        {projectState.justification.pros.map((pro, i) => (
-                          <li key={i}>• {pro}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-yellow-700 mb-2">⚠️ Cons</h4>
-                      <ul className="space-y-1 text-sm text-gray-700">
-                        {projectState.justification.cons.map((con, i) => (
-                          <li key={i}>• {con}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-blue-700 mb-2">💡 Alternatives</h4>
-                      <ul className="space-y-1 text-sm text-gray-700">
-                        {projectState.justification.alternatives.map((alt, i) => (
-                          <li key={i}>• {alt}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
+              {/* Tickets Board */}
+              <TicketsBoard
+                tickets={projectState.tickets || []}
+                projectName={projectState.requirements?.projectName}
+              />
 
-          {/* Console Logs (show when not loading and have logs) */}
-          {!isLoading && logs.length > 0 && (
-            <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs overflow-auto max-h-48">
-              <div className="font-semibold mb-2">📜 Log History</div>
-              {logs.map((log, i) => (
-                <div key={i}>{log}</div>
-              ))}
-            </div>
+              
+            </>
           )}
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="max-w-7xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
-        <p>
-          Built with Next.js, LangGraph, and OpenAI • Open source on GitHub
-        </p>
-      </footer>
     </div>
   );
 }

@@ -5,7 +5,6 @@ import type { StreamCallback } from "./index.js";
 import { parseDocument } from "./tools/parseDocument.js";
 import { runSecurityChecks } from "./tools/security.js";
 import { extractRequirements } from "./tools/extractRequirements.js";
-import { clarifyMissing } from "./tools/clarifyMissing.js";
 import { generateTickets } from "./tools/generateTickets.js";
 import { validateTickets } from "./tools/validateTickets.js";
 import { persistProject } from "./tools/persistProject.js";
@@ -74,45 +73,6 @@ async function extractNode(state: GraphState): Promise<Partial<GraphState>> {
 }
 
 /**
- * Clarify missing data node
- */
-async function clarifyNode(state: GraphState): Promise<Partial<GraphState>> {
-  // Skip if there's already an error
-  if (state.error) {
-    return {};
-  }
-
-  try {
-    console.log("❓ Checking for clarifications...");
-    globalStreamCallback?.({ type: 'status', message: '❓ Checking for clarifications...' });
-    
-    console.log(`   State has requirements: ${!!state.requirements}`);
-    if (!state.requirements) {
-      console.error("   ERROR: Requirements missing in clarify node!");
-      return { error: "Requirements not available for clarification" };
-    }
-
-    const clarifications = await clarifyMissing(state.requirements);
-    console.log(`   Found ${clarifications.length} clarifications`);
-    
-    if (clarifications.length > 0) {
-      globalStreamCallback?.({ 
-        type: 'progress', 
-        message: `❓ Found ${clarifications.length} question(s) for clarification`,
-        data: { clarifications }
-      });
-    } else {
-      globalStreamCallback?.({ type: 'progress', message: '✅ No clarifications needed' });
-    }
-    
-    return { clarifications };
-  } catch (error) {
-    console.error("   Clarify node error:", error);
-    return { error: `Clarify error: ${error instanceof Error ? error.message : "Unknown error"}` };
-  }
-}
-
-/**
  * RAG search node (optional)
  */
 async function ragNode(state: GraphState): Promise<Partial<GraphState>> {
@@ -165,18 +125,34 @@ async function generateNode(state: GraphState): Promise<Partial<GraphState>> {
       return { error: "Requirements not available for ticket generation" };
     }
 
-    const result = await generateTickets(state.requirements, state.answers);
-    console.log(`   Generated ${result.tickets.length} tickets`);
-    
-    // Stream each ticket individually
-    for (let i = 0; i < result.tickets.length; i++) {
-      const ticket = result.tickets[i];
-      globalStreamCallback?.({ 
-        type: 'progress', 
-        message: `🎫 Generated ticket ${i + 1}/${result.tickets.length}: ${ticket.title}`,
-        data: { ticket, index: i, total: result.tickets.length }
-      });
-    }
+    const result = await generateTickets(
+      state.requirements, 
+      undefined,
+      // Progress callback for batch processing
+      (batchInfo) => {
+        console.log(`   📦 Batch ${batchInfo.batch}/${batchInfo.total}: Generated ${batchInfo.tickets.length} tickets`);
+        globalStreamCallback?.({ 
+          type: 'progress', 
+          message: `📦 Batch ${batchInfo.batch}/${batchInfo.total}: Generated ${batchInfo.tickets.length} tickets for this section`,
+          data: { 
+            batch: batchInfo.batch,
+            totalBatches: batchInfo.total,
+            batchTickets: batchInfo.tickets.length
+          }
+        });
+
+        // Stream each ticket from this batch
+        batchInfo.tickets.forEach((ticket, idx) => {
+          globalStreamCallback?.({ 
+            type: 'progress', 
+            message: `  🎫 ${ticket.title}`,
+            data: { ticket }
+          });
+        });
+      }
+    );
+    console.log(`   Generated ${result.tickets.length} total tickets`);
+
     
     globalStreamCallback?.({ 
       type: 'progress', 
@@ -186,7 +162,6 @@ async function generateNode(state: GraphState): Promise<Partial<GraphState>> {
     
     return {
       tickets: result.tickets,
-      justification: result.justification,
     };
   } catch (error) {
     console.error("   Generate node error:", error);
@@ -260,10 +235,7 @@ async function persistNode(state: GraphState): Promise<Partial<GraphState>> {
       id: projectId,
       rawText: state.rawText,
       requirements: state.requirements!,
-      clarifications: state.clarifications,
-      answers: state.answers,
       tickets: state.tickets,
-      justification: state.justification!,
       cost: state.cost,
       createdAt: state.projectId ? state.createdAt || now : now,
       updatedAt: now,
@@ -315,14 +287,6 @@ export function buildGraph(streamCallback?: StreamCallback) {
         },
         default: () => undefined,
       },
-      clarifications: {
-        value: (x: string[], y?: string[]) => y !== undefined ? y : x,
-        default: () => [],
-      },
-      answers: {
-        value: (x: Record<string, string>, y?: Record<string, string>) => y !== undefined ? y : x,
-        default: () => ({}),
-      },
       tickets: {
         value: (x: any[], y?: any[]) => {
           if (y !== undefined) {
@@ -332,10 +296,6 @@ export function buildGraph(streamCallback?: StreamCallback) {
           return x;
         },
         default: () => [],
-      },
-      justification: {
-        value: (x: any, y?: any) => y !== undefined ? y : x,
-        default: () => undefined,
       },
       cost: {
         value: (x: any, y?: any) => y !== undefined ? y : x,
@@ -356,7 +316,6 @@ export function buildGraph(streamCallback?: StreamCallback) {
   workflow.addNode("parse", parseNode);
   workflow.addNode("security", securityNode);
   workflow.addNode("extract", extractNode);
-  workflow.addNode("clarify", clarifyNode);
   workflow.addNode("rag", ragNode);
   workflow.addNode("generate", generateNode);
   workflow.addNode("validate", validateNode);
@@ -370,9 +329,7 @@ export function buildGraph(streamCallback?: StreamCallback) {
   // @ts-ignore
   workflow.addEdge("security", "extract");
   // @ts-ignore
-  workflow.addEdge("extract", "clarify");
-  // @ts-ignore
-  workflow.addEdge("clarify", "rag");
+  workflow.addEdge("extract", "rag");
   // @ts-ignore
   workflow.addEdge("rag", "generate");
   // @ts-ignore

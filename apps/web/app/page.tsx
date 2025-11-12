@@ -124,12 +124,7 @@ export default function Home() {
                   setCurrentBatch(null);
                   addLog("🎉 Tickets generated successfully!");
 
-                  if (event.data.clarifications.length > 0) {
-                    addLog(`Need ${event.data.clarifications.length} clarifications`);
-                    setState("clarify");
-                  } else {
-                    setState("tickets");
-                  }
+                  setState("tickets");
                 }
               } catch (e) {
                 console.error("Failed to parse event:", e);

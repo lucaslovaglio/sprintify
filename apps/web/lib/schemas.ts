@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Re-export types from agent package
-export { type Ticket, type Requirements, type ProjectState, type Cost } from "agent/src/types";
+export { type Ticket, type Requirements, type ProjectState, type Cost } from "agent";
 
 // Ticket schema with strict validation
 export const TicketSchema = z.object({

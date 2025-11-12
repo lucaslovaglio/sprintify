@@ -19,8 +19,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./app/*"],
-      "agent": ["../agent/src/index.ts"]
+      "@/*": ["./app/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

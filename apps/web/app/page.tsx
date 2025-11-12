@@ -16,6 +16,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [logs, setLogs] = useState<string[]>([]);
   const [generatingTickets, setGeneratingTickets] = useState(false);
+  const [validatingTickets, setValidatingTickets] = useState(false);
   const [currentBatch, setCurrentBatch] = useState<{ current: number; total: number } | null>(null);
 
   const addLog = (message: string) => {
@@ -79,6 +80,13 @@ export default function Home() {
                   // Detect when ticket generation starts
                   if (event.message.includes("Generating tickets")) {
                     setGeneratingTickets(true);
+                    setValidatingTickets(false);
+                  }
+                  
+                  // Detect when validation starts
+                  if (event.message.includes("Validating tickets")) {
+                    setGeneratingTickets(false);
+                    setValidatingTickets(true);
                   }
                 } else if (event.type === "progress") {
                   addLog(event.message);
@@ -96,16 +104,23 @@ export default function Home() {
                     setGeneratingTickets(false);
                     setCurrentBatch(null);
                   }
+                  
+                  // If validation completes (either successfully or with issues)
+                  if (event.message.includes("validated successfully") || event.message.includes("validation issue")) {
+                    setValidatingTickets(false);
+                  }
                 } else if (event.type === "error") {
                   hasError = true;
                   errorMessage = event.message;
                   setError(event.message);
                   addLog(event.message);
                   setGeneratingTickets(false);
+                  setValidatingTickets(false);
                   setCurrentBatch(null);
                 } else if (event.type === "complete") {
                   setProjectState(event.data);
                   setGeneratingTickets(false);
+                  setValidatingTickets(false);
                   setCurrentBatch(null);
                   addLog("🎉 Tickets generated successfully!");
 
@@ -142,6 +157,9 @@ export default function Home() {
       addLog(`❌ Error: ${errorMessage}`);
     } finally {
       setIsLoading(false);
+      setGeneratingTickets(false);
+      setValidatingTickets(false);
+      setCurrentBatch(null);
     }
   };
 
@@ -242,9 +260,11 @@ export default function Home() {
             <div className="flex items-center gap-2 mb-2">
               <div className="animate-spin h-4 w-4 border-2 border-green-400 border-t-transparent rounded-full"></div>
               <span className="font-semibold text-green-400">
-                {generatingTickets && currentBatch 
-                  ? `Batch ${currentBatch.current}/${currentBatch.total}`
-                  : "Processing..."}
+                {validatingTickets 
+                  ? "Validando..."
+                  : generatingTickets && currentBatch 
+                    ? `Batch ${currentBatch.current}/${currentBatch.total}`
+                    : "Processing..."}
               </span>
             </div>
             {generatingTickets && currentBatch && (
@@ -310,30 +330,47 @@ export default function Home() {
           )}
 
           {/* Ticket Generation Progress with Skeletons */}
-          {generatingTickets && currentBatch && (
-            <div className="bg-white p-6 rounded-lg shadow-md border border-blue-200">
-              <div className="mb-4">
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Generando Tickets - Sección {currentBatch.current}/{currentBatch.total}
-                  </h3>
-                  <span className="text-sm text-gray-600">
-                    {Math.round((currentBatch.current / currentBatch.total) * 100)}%
-                  </span>
+          {(state !== "tickets") && ((generatingTickets && currentBatch) || validatingTickets) ? (
+            <div className="p-6 mb-6">
+              {generatingTickets && currentBatch && (
+                <div className="mb-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Generando Tickets - Sección {currentBatch.current}/{currentBatch.total}
+                    </h3>
+                    <span className="text-sm text-gray-600">
+                      {Math.round((currentBatch.current / currentBatch.total) * 100)}%
+                    </span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${(currentBatch.current / currentBatch.total) * 100}%` }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                    style={{ width: `${(currentBatch.current / currentBatch.total) * 100}%` }}
-                  ></div>
+              )}
+              
+              {validatingTickets && (
+                <div className="mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Validando Tickets
+                    </h3>
+                    <div className="animate-spin h-5 w-5 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+                  </div>
                 </div>
-              </div>
+              )}
               
               {/* Skeleton Tickets */}
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {[...Array(6)].map((_, i) => (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {[...Array(12)].map((_, i) => (
                   <div key={i} className="animate-pulse bg-gray-100 rounded-lg p-4 border border-gray-200">
                     <div className="h-4 bg-gray-300 rounded w-3/4 mb-3"></div>
+                    <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-5/6 mb-3"></div>
+                    <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-5/6 mb-3"></div>
                     <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
                     <div className="h-3 bg-gray-200 rounded w-5/6 mb-3"></div>
                     <div className="flex gap-2 mt-3">
@@ -344,10 +381,10 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          )}
+          ) : null}
 
           {/* Upload State */}
-          {state === "upload" && (
+          {state === "upload" && !((generatingTickets && currentBatch) || validatingTickets) && (
             <Upload onGenerate={handleGenerate} isLoading={isLoading} />
           )}
 

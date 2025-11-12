@@ -27,8 +27,8 @@ export function ChatEditor({ onEdit, isLoading }: ChatEditorProps) {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
-      <h3 className="text-lg font-semibold mb-4">✏️ Edit Tickets via Chat</h3>
+    <div className="w-full mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+      <h3 className="text-lg font-semibold mb-4">Edit Tickets via Chat</h3>
       
       {/* Suggestions */}
       <div className="mb-4">

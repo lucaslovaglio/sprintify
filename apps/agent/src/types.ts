@@ -37,15 +37,6 @@ export const RequirementsSchema = z.object({
 
 export type Requirements = z.infer<typeof RequirementsSchema>;
 
-// Justification type
-export const JustificationSchema = z.object({
-  pros: z.array(z.string()),
-  cons: z.array(z.string()),
-  alternatives: z.array(z.string()),
-});
-
-export type Justification = z.infer<typeof JustificationSchema>;
-
 // Cost tracking type
 export const CostSchema = z.object({
   tokensIn: z.number(),
@@ -60,10 +51,7 @@ export const ProjectStateSchema = z.object({
   id: z.string(),
   rawText: z.string(),
   requirements: RequirementsSchema,
-  clarifications: z.array(z.string()),
-  answers: z.record(z.string(), z.string()),
   tickets: z.array(TicketSchema),
-  justification: JustificationSchema,
   cost: CostSchema,
   createdAt: z.string(),
   updatedAt: z.string(),
@@ -101,10 +89,7 @@ export interface GraphState {
   projectId?: string;
   rawText: string;
   requirements?: Requirements;
-  clarifications: string[];
-  answers: Record<string, string>;
   tickets: Ticket[];
-  justification?: Justification;
   cost: Cost;
   error?: string;
   createdAt?: string;

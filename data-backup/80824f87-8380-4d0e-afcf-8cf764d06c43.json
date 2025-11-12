@@ -1,0 +1,27 @@
+{
+  "id": "80824f87-8380-4d0e-afcf-8cf764d06c43",
+  "rawText": "Quiero comprar un kiosko",
+  "requirements": {
+    "projectName": "",
+    "summary": "",
+    "goals": [],
+    "constraints": [],
+    "features": [],
+    "stakeholders": [],
+    "techHints": []
+  },
+  "clarifications": [
+    "¿Cuál es el presupuesto del proyecto o restricción de costos? (ej: $X/mes para hosting, $Y presupuesto total)",
+    "¿Cuál es el plazo o fecha límite objetivo para este proyecto? (ej: lanzamiento en 6 semanas, MVP en 3 meses)",
+    "¿Cuál es la escala de usuarios o tráfico esperado? (ej: 100 usuarios, 10K usuarios activos diarios, 1M visitas/mes)"
+  ],
+  "answers": {},
+  "tickets": [],
+  "cost": {
+    "tokensIn": 0,
+    "tokensOut": 0,
+    "usd": 0
+  },
+  "createdAt": "2025-11-11T18:56:15.412Z",
+  "updatedAt": "2025-11-11T18:56:15.412Z"
+}

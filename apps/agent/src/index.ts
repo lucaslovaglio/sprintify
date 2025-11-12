@@ -1,10 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
+import { z } from "zod";
 import { buildGraph } from "./graph.js";
 import { parseDocument } from "./tools/parseDocument.js";
 import { loadProject, persistProject } from "./tools/persistProject.js";
 import { initCostTracker, getGlobalCostTracker } from "./tools/costTracker.js";
 import { ChatOpenAI } from "@langchain/openai";
 import type { ProjectState, ParseDocumentInput, GraphState } from "./types.js";
+import { TicketSchema } from "./types.js";
 
 export type StreamEvent = {
   type: 'status' | 'progress' | 'error' | 'complete';
@@ -42,8 +44,6 @@ export async function runAgent(input: {
   const initialState: GraphState = {
     projectId: input.projectId,
     rawText,
-    clarifications: [],
-    answers: {},
     tickets: [],
     cost: { tokensIn: 0, tokensOut: 0, usd: 0 },
   };
@@ -65,10 +65,7 @@ export async function runAgent(input: {
     id: result.projectId || uuidv4(),
     rawText: result.rawText,
     requirements: result.requirements!,
-    clarifications: result.clarifications,
-    answers: result.answers,
     tickets: result.tickets,
-    justification: result.justification!,
     cost,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -85,50 +82,6 @@ export async function runAgent(input: {
 }
 
 /**
- * Re-run agent with clarification answers
- */
-export async function runWithClarifications(
-  projectId: string,
-  answers: Record<string, string>
-): Promise<ProjectState> {
-  const existingState = await loadProject(projectId);
-  if (!existingState) {
-    throw new Error(`Project ${projectId} not found`);
-  }
-
-  // Merge answers
-  const mergedAnswers: Record<string, string> = { ...existingState.answers, ...answers };
-
-  // Re-run from generate step
-  initCostTracker(process.env.OPENAI_MODEL || "gpt-4-turbo-preview");
-
-  const { generateTickets } = await import("./tools/generateTickets.js");
-  const { validateTickets } = await import("./tools/validateTickets.js");
-
-  const result = await generateTickets(existingState.requirements, mergedAnswers);
-  await validateTickets(result.tickets, existingState.requirements);
-
-  const tracker = getGlobalCostTracker();
-  const additionalCost = tracker.getCost();
-
-  const updatedState: ProjectState = {
-    ...existingState,
-    answers: mergedAnswers,
-    tickets: result.tickets,
-    justification: result.justification,
-    cost: {
-      tokensIn: existingState.cost.tokensIn + additionalCost.tokensIn,
-      tokensOut: existingState.cost.tokensOut + additionalCost.tokensOut,
-      usd: existingState.cost.usd + additionalCost.usd,
-    },
-    updatedAt: new Date().toISOString(),
-  };
-
-  await persistProject(updatedState);
-  return updatedState;
-}
-
-/**
  * Edit tickets based on natural language instruction
  */
 export async function editTickets(
@@ -142,25 +95,41 @@ export async function editTickets(
 
   initCostTracker(process.env.OPENAI_MODEL || "gpt-4-turbo-preview");
 
-  // Use LLM to interpret the edit instruction
   const model = new ChatOpenAI({
     modelName: process.env.OPENAI_MODEL || "gpt-4-turbo-preview",
     temperature: 0.2,
+    modelKwargs: {
+      response_format: { type: "json_object" }
+    }
   });
 
-  const systemPrompt = `You are a ticket editor. Given a list of tickets and a user instruction, apply the requested changes and return the updated tickets in JSON format.
+  // Step 1: Ask LLM to identify which tickets to modify and provide the changes
+  const systemPrompt = `You are a ticket editor. Given a list of tickets and a user instruction, identify which tickets need to be modified and provide ONLY those modified tickets.
 
 Possible instructions include:
-- "Split ticket X into Y and Z"
-- "Merge tickets X and Y"
-- "Add acceptance criteria to ticket X"
-- "Increase detail on ticket X"
-- "Change priority of ticket X to P1"
-- "Add dependency from X to Y"
+- "Split ticket X into Y and Z" - Remove X, add Y and Z
+- "Merge tickets X and Y" - Remove X and Y, add merged ticket
+- "Add acceptance criteria to ticket X" - Modify X
+- "Increase detail on ticket X" - Modify X
+- "Change priority of ticket X to P1" - Modify X
+- "Add dependency from X to Y" - Modify Y
 
-Return the complete updated tickets array in JSON format.`;
+Return a JSON object with:
+{
+  "toRemove": ["id1", "id2"],  // IDs of tickets to remove
+  "toAddOrUpdate": [...]  // New or modified tickets (full ticket objects)
+}
 
-  const userPrompt = `Current tickets:\n${JSON.stringify(existingState.tickets, null, 2)}\n\nInstruction: ${instruction}`;
+If splitting or merging, include new tickets in toAddOrUpdate. Each ticket must have: id, title, description, acceptanceCriteria (array), effortPoints (number: 1,2,3,5,8,13), useCase, priority (P1/P2/P3), labels (array), dependencies (array).`;
+
+  // Only send a summary of tickets to reduce token count
+  const ticketSummary = existingState.tickets.map(t => ({
+    id: t.id,
+    title: t.title,
+    priority: t.priority
+  }));
+
+  const userPrompt = `Ticket summary:\n${JSON.stringify(ticketSummary, null, 2)}\n\nFull tickets (for reference):\n${JSON.stringify(existingState.tickets, null, 2)}\n\nInstruction: ${instruction}`;
 
   const response = await model.invoke([
     { role: "system", content: systemPrompt },
@@ -175,15 +144,49 @@ Return the complete updated tickets array in JSON format.`;
     );
   }
 
-  // Parse response
+  // Parse and validate response
   const content = response.content as string;
-  let jsonStr = content;
-  const jsonMatch = content.match(/```(?:json)?\s*(\[[\s\S]*?\])\s*```/);
-  if (jsonMatch) {
-    jsonStr = jsonMatch[1];
+  let parsed;
+  
+  try {
+    parsed = JSON.parse(content);
+  } catch (parseError) {
+    console.error("JSON parse error:", parseError);
+    console.error("Content:", content.substring(0, 500));
+    throw new Error(`Failed to parse JSON response. Please try a simpler edit instruction.`);
+  }
+  
+  // Validate with Zod
+  const editSchema = z.object({
+    toRemove: z.array(z.string()),
+    toAddOrUpdate: z.array(TicketSchema)
+  });
+
+  const validationResult = editSchema.safeParse(parsed);
+
+  if (!validationResult.success) {
+    console.error("Validation error:", validationResult.error);
+    throw new Error(`Invalid response format. Please try a simpler edit instruction.`);
   }
 
-  const updatedTickets = JSON.parse(jsonStr);
+  // Apply changes
+  const { toRemove, toAddOrUpdate } = validationResult.data;
+  
+  // Start with existing tickets, removing the ones to delete
+  let updatedTickets = existingState.tickets.filter(t => !toRemove.includes(t.id));
+  
+  // Update or add tickets
+  for (const newTicket of toAddOrUpdate) {
+    const existingIndex = updatedTickets.findIndex(t => t.id === newTicket.id);
+    if (existingIndex >= 0) {
+      // Update existing ticket
+      updatedTickets[existingIndex] = newTicket;
+    } else {
+      // Add new ticket
+      updatedTickets.push(newTicket);
+    }
+  }
+
   const additionalCost = tracker.getCost();
 
   const updatedState: ProjectState = {

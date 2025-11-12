@@ -1,0 +1,14 @@
+{
+  "id": "b66ef9ca-00cc-431c-8613-cfbf6874f682",
+  "rawText": "# Example Requirements Document\n\n## Course Enrollment Platform\n\nWe need a web platform for course enrollment where students can browse available courses, enroll, and make payments.\n\n### Goals\n- Students can browse and search for courses\n- Students can enroll in courses online\n- Students can pay for courses securely\n- Admins can manage the course catalog\n- Generate reports for finance team\n\n### Constraints\n- Budget: less than $150 per month for hosting\n- Prefer AWS infrastructure\n- Must release MVP in 6 weeks\n- Must comply with PCI-DSS for payment processing\n- Support up to 1,000 concurrent users initially\n\n### Features\n\n1. **User Authentication**\n   - Student and admin login\n   - Password reset functionality\n   - Email verification\n\n2. **Course Catalog**\n   - List all available courses\n   - Course details page (description, instructor, schedule, price)\n   - Filter by category, price, schedule\n\n3. **Search Functionality**\n   - Search courses by name, instructor, or keywords\n   - Auto-complete suggestions\n\n4. **Shopping Cart**\n   - Add/remove courses\n   - View total price\n   - Apply discount codes\n\n5. **Checkout & Payment**\n   - Integrate with Stripe for payment processing\n   - Support credit card payments\n   - Email confirmation after successful payment\n\n6. **Admin Dashboard**\n   - CRUD operations for courses\n   - Manage instructors\n   - View enrollment statistics\n\n7. **Reports**\n   - Revenue reports by course\n   - Enrollment trends\n   - Export to CSV\n\n### Stakeholders\n- Students (primary users)\n- Course administrators\n- Finance team\n- System administrators\n\n### Technical Hints\n- React for frontend\n- Node.js/Express for backend\n- PostgreSQL database\n- AWS hosting (EC2 + RDS)\n- Stripe for payments",
+  "clarifications": [],
+  "answers": {},
+  "tickets": [],
+  "cost": {
+    "tokensIn": 0,
+    "tokensOut": 0,
+    "usd": 0
+  },
+  "createdAt": "2025-11-11T16:56:36.974Z",
+  "updatedAt": "2025-11-11T16:56:36.974Z"
+}

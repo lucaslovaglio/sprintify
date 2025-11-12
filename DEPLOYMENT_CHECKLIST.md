@@ -200,7 +200,7 @@ ANALYTICS_ID=...
 Add middleware in Next.js:
 ```typescript
 // middleware.ts
-import { rateLimit } from '@/lib/rate-limit';
+import { rateLimit } from '../../lib/rate-limit';
 
 export async function middleware(request: Request) {
   const ip = request.headers.get('x-forwarded-for') || 'unknown';

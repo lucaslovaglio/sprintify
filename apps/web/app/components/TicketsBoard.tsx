@@ -1,6 +1,6 @@
 "use client";
 
-import type { Ticket } from "@/lib/schemas";
+import type { Ticket } from "../../lib/schemas";
 import { TicketCard } from "./TicketCard";
 
 interface TicketsBoardProps {
@@ -8,11 +8,17 @@ interface TicketsBoardProps {
   projectName?: string;
 }
 
-export function TicketsBoard({ tickets, projectName }: TicketsBoardProps) {
-  const p1Tickets = tickets.filter((t) => t.priority === "P1");
-  const p2Tickets = tickets.filter((t) => t.priority === "P2");
-  const p3Tickets = tickets.filter((t) => t.priority === "P3");
+const priorityOrder: Record<string, number> = { P1: 1, P2: 2, P3: 3 };
 
+export function TicketsBoard({ tickets, projectName }: TicketsBoardProps) {
+  // Sort tickets by priority (P1 first, then P2, then P3)
+  const sortedTickets = [...tickets].sort((a, b) => {
+    return (priorityOrder[a.priority] || 999) - (priorityOrder[b.priority] || 999);
+  });
+
+  const p1Count = tickets.filter((t) => t.priority === "P1").length;
+  const p2Count = tickets.filter((t) => t.priority === "P2").length;
+  const p3Count = tickets.filter((t) => t.priority === "P3").length;
   const totalPoints = tickets.reduce((sum, t) => sum + t.effortPoints, 0);
 
   return (
@@ -22,86 +28,35 @@ export function TicketsBoard({ tickets, projectName }: TicketsBoardProps) {
         <h2 className="text-2xl font-bold text-gray-900">
           {projectName || "Development Tickets"}
         </h2>
-        <div className="flex gap-4 mt-2 text-sm text-gray-600">
-          <span>
-            <strong>{tickets.length}</strong> tickets
+        <div className="flex gap-6 mt-3 text-sm">
+          <span className="text-gray-600">
+            <strong className="text-gray-900">{tickets.length}</strong> tickets
           </span>
-          <span>
-            <strong>{totalPoints}</strong> story points
+          <span className="text-gray-600">
+            <strong className="text-gray-900">{totalPoints}</strong> story points
           </span>
+          <div className="flex gap-4 ml-auto">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+              <span className="text-gray-600">P1: <strong className="text-red-700">{p1Count}</strong></span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 bg-yellow-500 rounded-full"></span>
+              <span className="text-gray-600">P2: <strong className="text-yellow-700">{p2Count}</strong></span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 bg-green-500 rounded-full"></span>
+              <span className="text-gray-600">P3: <strong className="text-green-700">{p3Count}</strong></span>
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Columns */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* P1 Column */}
-        <div>
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold text-red-700 flex items-center gap-2">
-              <span className="w-3 h-3 bg-red-500 rounded-full"></span>
-              Priority 1
-              <span className="text-sm font-normal text-gray-500">
-                ({p1Tickets.length})
-              </span>
-            </h3>
-          </div>
-          <div className="space-y-4">
-            {p1Tickets.map((ticket) => (
-              <TicketCard key={ticket.id} ticket={ticket} />
-            ))}
-            {p1Tickets.length === 0 && (
-              <div className="text-sm text-gray-400 text-center py-8">
-                No P1 tickets
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* P2 Column */}
-        <div>
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold text-yellow-700 flex items-center gap-2">
-              <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
-              Priority 2
-              <span className="text-sm font-normal text-gray-500">
-                ({p2Tickets.length})
-              </span>
-            </h3>
-          </div>
-          <div className="space-y-4">
-            {p2Tickets.map((ticket) => (
-              <TicketCard key={ticket.id} ticket={ticket} />
-            ))}
-            {p2Tickets.length === 0 && (
-              <div className="text-sm text-gray-400 text-center py-8">
-                No P2 tickets
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* P3 Column */}
-        <div>
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold text-green-700 flex items-center gap-2">
-              <span className="w-3 h-3 bg-green-500 rounded-full"></span>
-              Priority 3
-              <span className="text-sm font-normal text-gray-500">
-                ({p3Tickets.length})
-              </span>
-            </h3>
-          </div>
-          <div className="space-y-4">
-            {p3Tickets.map((ticket) => (
-              <TicketCard key={ticket.id} ticket={ticket} />
-            ))}
-            {p3Tickets.length === 0 && (
-              <div className="text-sm text-gray-400 text-center py-8">
-                No P3 tickets
-              </div>
-            )}
-          </div>
-        </div>
+      {/* Grid of Tickets (sorted by priority) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {sortedTickets.map((ticket) => (
+          <TicketCard key={ticket.id} ticket={ticket} />
+        ))}
       </div>
     </div>
   );

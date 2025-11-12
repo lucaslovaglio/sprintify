@@ -19,19 +19,40 @@ Each ticket MUST include:
 - dependencies: Array of ticket IDs that must be completed first (e.g., ["TICKET-001"])
 
 Guidelines:
-1. Cover ALL features and goals from the requirements
+1. Cover ALL features and goals from the requirements - DO NOT skip any features
 2. Split large features into multiple smaller tickets (max 8 points per ticket)
 3. Keep titles unique and descriptive
 4. Ensure acceptance criteria are testable and specific
 5. Identify logical dependencies between tickets
 6. Balance the backlog across priorities
 7. Include infrastructure, testing, and documentation tickets when relevant
-8. IMPORTANT: Generate tickets in the SAME LANGUAGE as the requirements. If requirements are in Spanish, generate all tickets, descriptions, and acceptance criteria in Spanish. If in English, use English.
+8. Generate AS MANY tickets as needed - there is NO limit on the number of tickets
+9. For complex projects, it's normal to generate 15-50+ tickets
+10. Each distinct feature or functionality should have its own ticket(s)
+11. IMPORTANT: Generate tickets in the SAME LANGUAGE as the requirements. If requirements are in Spanish, generate all tickets, descriptions, and acceptance criteria in Spanish. If in English, use English.
 
-Also provide justification:
-- pros: Benefits of this ticket breakdown approach
-- cons: Potential challenges or limitations
-- alternatives: Other ways the work could have been organized
+Examples of ticket counts by project size:
+- Simple project (1-3 features): 8-15 tickets
+- Medium project (4-7 features): 15-35 tickets
+- Large project (8+ features): 35-70+ tickets
+
+How to break down a single feature into multiple tickets:
+Example: "User Authentication" feature should become:
+- Backend: Create user model and database schema
+- Backend: Implement registration API endpoint
+- Backend: Implement login API endpoint with JWT
+- Backend: Implement password reset flow
+- Frontend: Create registration form UI
+- Frontend: Create login form UI
+- Frontend: Implement authentication state management
+- Security: Add rate limiting to auth endpoints
+- Testing: Write unit tests for authentication logic
+- Testing: Write integration tests for auth flow
+That's 10 tickets from ONE feature!
+
+CRITICAL: You MUST generate AT LEAST 2-3 tickets per feature minimum. A single feature should NEVER be just one ticket.
+
+Remember: It's better to have MORE granular tickets than fewer large ones! When in doubt, CREATE MORE TICKETS!
 
 Output format:
 {
@@ -47,11 +68,6 @@ Output format:
       "labels": ["string"],
       "dependencies": []
     }
-  ],
-  "justification": {
-    "pros": ["string"],
-    "cons": ["string"],
-    "alternatives": ["string"]
-  }
+  ]
 }
 

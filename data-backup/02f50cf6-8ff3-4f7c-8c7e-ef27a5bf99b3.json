@@ -1,0 +1,244 @@
+{
+  "id": "02f50cf6-8ff3-4f7c-8c7e-ef27a5bf99b3",
+  "rawText": "# Example Requirements Document\n\n## Course Enrollment Platform\n\nWe need a web platform for course enrollment where students can browse available courses, enroll, and make payments.\n\n### Goals\n- Students can browse and search for courses\n- Students can enroll in courses online\n- Students can pay for courses securely\n- Admins can manage the course catalog\n- Generate reports for finance team\n\n### Constraints\n- Budget: less than $150 per month for hosting\n- Prefer AWS infrastructure\n- Must release MVP in 6 weeks\n- Must comply with PCI-DSS for payment processing\n- Support up to 1,000 concurrent users initially\n\n### Features\n\n1. **User Authentication**\n   - Student and admin login\n   - Password reset functionality\n   - Email verification\n\n2. **Course Catalog**\n   - List all available courses\n   - Course details page (description, instructor, schedule, price)\n   - Filter by category, price, schedule\n\n3. **Search Functionality**\n   - Search courses by name, instructor, or keywords\n   - Auto-complete suggestions\n\n4. **Shopping Cart**\n   - Add/remove courses\n   - View total price\n   - Apply discount codes\n\n5. **Checkout & Payment**\n   - Integrate with Stripe for payment processing\n   - Support credit card payments\n   - Email confirmation after successful payment\n\n6. **Admin Dashboard**\n   - CRUD operations for courses\n   - Manage instructors\n   - View enrollment statistics\n\n7. **Reports**\n   - Revenue reports by course\n   - Enrollment trends\n   - Export to CSV\n\n### Stakeholders\n- Students (primary users)\n- Course administrators\n- Finance team\n- System administrators\n\n### Technical Hints\n- React for frontend\n- Node.js/Express for backend\n- PostgreSQL database\n- AWS hosting (EC2 + RDS)\n- Stripe for payments",
+  "requirements": {
+    "projectName": "Course Enrollment Platform",
+    "summary": "A web platform for course enrollment allowing students to browse, enroll, and make payments for courses, while providing admins the ability to manage the course catalog and generate finance reports.",
+    "goals": [
+      "Students can browse and search for courses",
+      "Students can enroll in courses online",
+      "Students can pay for courses securely",
+      "Admins can manage the course catalog",
+      "Generate reports for finance team"
+    ],
+    "constraints": [
+      "Budget: less than $150 per month for hosting",
+      "Prefer AWS infrastructure",
+      "Must release MVP in 6 weeks",
+      "Must comply with PCI-DSS for payment processing",
+      "Support up to 1,000 concurrent users initially"
+    ],
+    "features": [
+      "User authentication",
+      "Course catalog",
+      "Search functionality",
+      "Shopping cart",
+      "Checkout & payment",
+      "Admin dashboard",
+      "Reports"
+    ],
+    "stakeholders": [
+      "Students",
+      "Course administrators",
+      "Finance team",
+      "System administrators"
+    ],
+    "techHints": [
+      "React",
+      "Node.js/Express",
+      "PostgreSQL",
+      "AWS hosting (EC2 + RDS)",
+      "Stripe"
+    ]
+  },
+  "clarifications": [],
+  "answers": {},
+  "tickets": [
+    {
+      "id": "TICKET-001",
+      "title": "Set up AWS infrastructure",
+      "description": "Create and configure the AWS infrastructure to support the Course Enrollment Platform, ensuring it can handle up to 1,000 concurrent users while staying within the $150 monthly budget. This includes setting up EC2 instances for the application server and RDS for PostgreSQL.",
+      "acceptanceCriteria": [
+        "AWS EC2 instances are running and accessible",
+        "AWS RDS instance is running PostgreSQL and accessible",
+        "Infrastructure cost estimation does not exceed $150 per month"
+      ],
+      "effortPoints": 8,
+      "useCase": "Infrastructure setup",
+      "priority": "P1",
+      "labels": [
+        "infrastructure",
+        "AWS",
+        "EC2",
+        "RDS"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TICKET-002",
+      "title": "Implement user authentication",
+      "description": "Develop a secure user authentication system allowing students and admins to log in and access the platform. This system will support features like registration, login, and password management.",
+      "acceptanceCriteria": [
+        "Given valid credentials, users can log in",
+        "Given invalid credentials, users cannot log in and see an error",
+        "Users can register for a new account",
+        "Users can reset their password if forgotten"
+      ],
+      "effortPoints": 5,
+      "useCase": "User authentication",
+      "priority": "P1",
+      "labels": [
+        "backend",
+        "authentication",
+        "security"
+      ],
+      "dependencies": [
+        "TICKET-001"
+      ]
+    },
+    {
+      "id": "TICKET-003",
+      "title": "Develop course catalog API",
+      "description": "Create RESTful API endpoints to manage (CRUD operations) the course catalog. This will allow admins to add, update, delete, and list courses and students to view the available courses.",
+      "acceptanceCriteria": [
+        "Admins can create, update, and delete courses",
+        "Students and guests can view the list of courses",
+        "Each course entry includes title, description, price, and availability status"
+      ],
+      "effortPoints": 5,
+      "useCase": "Course catalog management",
+      "priority": "P1",
+      "labels": [
+        "backend",
+        "API",
+        "courses"
+      ],
+      "dependencies": [
+        "TICKET-001"
+      ]
+    },
+    {
+      "id": "TICKET-004",
+      "title": "Implement search functionality",
+      "description": "Enable a search feature for students to find courses by keywords. This involves indexing course information and implementing a search query interface.",
+      "acceptanceCriteria": [
+        "Given a keyword, the system returns a list of courses matching the keyword",
+        "Search results include course title, description, and price",
+        "Search is performant under load of up to 1,000 concurrent users"
+      ],
+      "effortPoints": 5,
+      "useCase": "Search functionality",
+      "priority": "P1",
+      "labels": [
+        "backend",
+        "search"
+      ],
+      "dependencies": [
+        "TICKET-003"
+      ]
+    },
+    {
+      "id": "TICKET-005",
+      "title": "Create shopping cart functionality",
+      "description": "Develop the shopping cart functionality that allows students to add courses to their cart, view their cart, update quantities, or remove courses before checkout.",
+      "acceptanceCriteria": [
+        "Students can add courses to their cart",
+        "Students can view their cart contents",
+        "Students can update the quantity of courses in their cart",
+        "Students can remove courses from their cart"
+      ],
+      "effortPoints": 5,
+      "useCase": "Shopping cart",
+      "priority": "P1",
+      "labels": [
+        "frontend",
+        "backend",
+        "cart"
+      ],
+      "dependencies": [
+        "TICKET-002",
+        "TICKET-003"
+      ]
+    },
+    {
+      "id": "TICKET-006",
+      "title": "Integrate Stripe for payment processing",
+      "description": "Integrate Stripe to handle secure payment processing for course enrollments. Ensure the integration complies with PCI-DSS requirements.",
+      "acceptanceCriteria": [
+        "Students can enter and submit payment information for courses in their cart",
+        "Payment information is processed securely in compliance with PCI-DSS",
+        "Upon successful payment, the student is enrolled in the course"
+      ],
+      "effortPoints": 8,
+      "useCase": "Checkout & payment",
+      "priority": "P1",
+      "labels": [
+        "backend",
+        "payment",
+        "Stripe",
+        "security"
+      ],
+      "dependencies": [
+        "TICKET-005"
+      ]
+    },
+    {
+      "id": "TICKET-007",
+      "title": "Build admin dashboard for course management",
+      "description": "Create an admin dashboard interface for managing the course catalog, including adding, updating, and removing courses.",
+      "acceptanceCriteria": [
+        "Admins can log in to access the dashboard",
+        "Admins can add, update, and delete courses",
+        "Changes are reflected in real-time on the student-facing site"
+      ],
+      "effortPoints": 5,
+      "useCase": "Admin dashboard",
+      "priority": "P1",
+      "labels": [
+        "frontend",
+        "admin",
+        "courses"
+      ],
+      "dependencies": [
+        "TICKET-002",
+        "TICKET-003"
+      ]
+    },
+    {
+      "id": "TICKET-008",
+      "title": "Implement finance report generation",
+      "description": "Develop a feature for generating finance reports based on course enrollments and payments. Reports should be accessible to the finance team with appropriate permissions.",
+      "acceptanceCriteria": [
+        "Finance team can generate reports on demand",
+        "Reports include total enrollments and revenue by course",
+        "Reports can be exported in CSV format"
+      ],
+      "effortPoints": 5,
+      "useCase": "Generate reports for finance team",
+      "priority": "P1",
+      "labels": [
+        "backend",
+        "reports",
+        "finance"
+      ],
+      "dependencies": [
+        "TICKET-002",
+        "TICKET-006"
+      ]
+    }
+  ],
+  "justification": {
+    "pros": [
+      "Breaks down the project into manageable, logically sequenced tasks.",
+      "Ensures that dependencies are clearly identified, facilitating smooth workflow and minimizing bottlenecks.",
+      "Balances the workload across backend and frontend development, allowing for parallel progress.",
+      "Prioritizes critical features for the MVP, aligning with the project timeline and goals."
+    ],
+    "cons": [
+      "Some tickets may be underestimated or overestimated due to the complexity of integrating third-party services like Stripe.",
+      "Dependencies could create delays if any of the prerequisite tasks encounter issues.",
+      "The effort to stay within the budget constraint for AWS infrastructure might require revisiting and optimization post-MVP, not accounted for in the current tickets."
+    ],
+    "alternatives": [
+      "Grouping related features into epics (e.g., all payment-related tasks under a 'Payment Processing' epic) to provide a higher-level view of progress.",
+      "Using a Kanban board for managing dependencies more visually, which can help in adjusting priorities on the fly."
+    ]
+  },
+  "cost": {
+    "tokensIn": 0,
+    "tokensOut": 0,
+    "usd": 0
+  },
+  "createdAt": "2025-11-11T17:12:17.925Z",
+  "updatedAt": "2025-11-11T17:12:17.925Z"
+}

@@ -1,0 +1,178 @@
+{
+  "id": "d5562030-7fba-4915-8259-778d7a86411b",
+  "rawText": "Propuesta de trabajo \n \n \nRecorrido del Turista \nV1.0 \n \n \n \n11/11/2025 \n \nwww.sirius.com.ar \nParque Empresarial Austral (Av. Sgto. Cayetano Beliera 3025, Pilar). Edificio M3. \nadministracion@sirius.com.ar\n \n \n \n\n \nÍndice \nÍndice..............................................................................................................................................1\n \nObjetivo...................................................................................................................................2 \nAlcance..........................................................................................................................................2\n \nEntregables................................................................................................................................10\n \nEquipo..........................................................................................................................................10\n \nDuración......................................................................................................................................10\n \nMetodología de trabajo...........................................................................................................11\n \nCostos Estimados del Proyecto............................................................................................11\n \nConsideraciones........................................................................................................................11\n \n  \n \nRecorrido del Turista   V1.0                                                              1 \n\n \nObjetivo \nEl objetivo es desarrollar una plataforma que brinde a los turistas, tanto nacionales como \nextranjeros, una experiencia de recorrido por la Ciudad de Buenos Aires más dinámica, \ndivertida y guiada. A través de la gamificación, se busca incentivar a las personas a seguir \nexplorando, no solo los principales puntos turísticos, sino también las ofertas gastronómicas \ny culturales que cada destino tiene para ofrecer. \nAlcance \nPlataforma de Turista \nLa plataforma contará con una aplicación móvil disponible para Android y iOS destinada a \nlos usuarios turistas. \n \nRegistro e Inicio de Sesión \nLos usuarios podrán registrarse ingresando un nombre de usuario, correo electrónico y \ncontraseña. Esta información permitirá identificarlos dentro del sistema y asignarles los \ndistintos premios y reconocimientos disponibles en la plataforma. \nAdemás, se incorporará la opción de inicio de sesión social mediante una cuenta de Google, \nuno de los métodos más utilizados actualmente. Esta funcionalidad reducirá la fricción en el \nproceso de registro y mejorará la experiencia de incorporación a la aplicación. \n \nSoporte Multilenguaje \nDado que la República Argentina, y en especial la Ciudad de Buenos Aires, es un importante \ndestino turístico internacional, la aplicación ofrecerá soporte multilenguaje, permitiendo \nalternar entre español e inglés. \n \n \nRecorrido del Turista   V1.0                                                              2 \n\n \n \n \nMapa Interactivo \nLos usuarios registrados podrán acceder a un mapa interactivo con todos los puntos \nturísticos precargados desde la plataforma de administración.  \nEl mapa permitirá filtrar ubicaciones por categoría (como parques, monumentos, museos o \nrestaurantes) brindando a los usuarios una referencia clara sobre los lugares que pueden \nvisitar. \n \n \nRecorrido del Turista   V1.0                                                              3 \n\n \n \n \nListado de recorridos \nLa plataforma ofrecerá al usuario una serie de recorridos predefinidos, cargados previamente \npor la administración. Al iniciar uno de estos recorridos, el usuario podrá visualizar los \ndistintos puntos turísticos que debe visitar para desbloquear la insignia asociada al recorrido \nseleccionado. \nLos recorridos podrán clasificarse según su temática, ciudad o incluso por el medio de \ntransporte utilizado, permitiendo una experiencia más personalizada y organizada. \n \nIniciar Recorrido \nEl usuario podrá seleccionar e iniciar cualquiera de los recorridos disponibles. \nAl hacerlo, la plataforma mostrará cuántos puntos turísticos conforman el recorrido y cuál es \nel primer punto al que debe dirigirse. \nEn la pantalla principal se presentará un mapa con un indicador de progreso, donde se \nvisualizarán todos los puntos turísticos a visitar. \n \nRecorrido del Turista   V1.0                                                              4 \n\n \nAdemás, el usuario podrá acceder a una lista detallada de puntos turísticos, y al seleccionar \nuno, obtendrá más información sobre el mismo. \nPara evitar que los usuarios realicen trampas, la aplicación utilizará su ubicación geográfica \nen tiempo real. \nCuando el usuario se encuentre dentro del área cercana al punto turístico, se habilitará la \nopción “Marcar como visitado”, que permitirá cargar una foto como comprobante. \nEsta acción otorgará puntos adicionales y permitirá avanzar en la experiencia del recorrido. \n \n \n \nDetalle de Ubicación \nAl seleccionar una ubicación en el mapa, el usuario accederá a información detallada sobre \nel lugar, su dirección y fotografías tomadas por otros visitantes. \nAlgunos sitios contarán con una estampa coleccionable, que se mostrará en gris si aún no \nfue obtenida y en color una vez desbloqueada. \nPara conseguirla, la plataforma le presentará en que recorridos se pueden obtener dicho \ncoleccionable. \n \nRecorrido del Turista   V1.0                                                              5 \n\n \n \n \n \nListado de Coleccionables \nLa aplicación incluirá un listado de coleccionables obtenidos y no obtenidos por cada \nusuario. \nEstos coleccionables representarán lugares icónicos de la Argentina mediante ilustraciones \nque podrán ser generadas por IA o creadas por artistas locales, fomentando así un círculo \nvirtuoso que promueve el arte y talento de la comunidad. \nEl diseño del listado evocará la estética de un pasaporte turístico o álbum coleccionable, \nfortaleciendo el sentido de pertenencia y la conexión emocional del usuario con la \nexperiencia de completar su colección. \nLos logros podrán clasificarse por zonas de la ciudad o por tipo (restaurante, museo, \nmonumento, comercio, etc.), facilitando la exploración de los intereses personales de cada \nusuario. \n \nRanking de Usuarios \n \nRecorrido del Turista   V1.0                                                              6 \n\n \nLa aplicación contará con un ranking mensual que mostrará a los usuarios con la mayor \ncantidad de puntos acumulados. \nLos rankings estarán divididos en distintas categorías, como: \n● \nUsuarios con más recorridos completados \n● \nUsuarios que completaron recorridos en menor tiempo \n● \nUsuarios con mayor cantidad de coleccionables obtenidos \n \nEsta funcionalidad tiene como objetivo reforzar la gamificación de la experiencia, \npromoviendo una competencia sana entre los participantes y fomentando el sentido de \ncomunidad dentro de la plataforma. \n \n \nPerfil del Usuario \nCada usuario contará con un perfil dentro de la aplicación donde podrá visualizar su \nprogreso, los puntos obtenidos, los coleccionables desbloqueados y los eventos en los que \nparticipó. Además, tendrá la posibilidad de editar información básica como su nombre e \nidioma preferido. \nDesde esta sección también podrá configurar su privacidad, eligiendo si desea mostrarse o \nno en el ranking de usuarios o compartir sus fotos con la comunidad. Esta funcionalidad \nbusca reforzar el sentido de identidad dentro de la plataforma y permitir una experiencia \nmás personalizada según las preferencias de cada turista. \n \nNotificaciones Push \nLa aplicación contará con un sistema de notificaciones push que mantendrá informados a \nlos usuarios sobre novedades relevantes, como recordatorios para completar actividades \npendientes. \nEstas notificaciones también podrán utilizarse para felicitar a los usuarios por logros \nobtenidos o para motivarlos a continuar participando en la plataforma. De esta forma, se \nbusca mantener un contacto constante con los turistas y fomentar su participación activa \nsin necesidad de que ingresen a la aplicación de manera manual. \n \nPlataforma de Administración \nSe desarrollará una plataforma web destinada al uso administrativo de la aplicación. \nDesde este entorno, los administradores podrán gestionar todas las entidades que \nconforman el sistema (como recorridos, puntos turísticos y usuarios), además de consultar \nmétricas e indicadores de rendimiento que faciliten la toma de decisiones estratégicas. \n \nRegistro e Inicio de Sesión \nLos usuarios podrán registrarse ingresando un nombre de usuario, correo electrónico y \ncontraseña. Esta información permitirá identificarlos dentro del sistema y asignarles los \ndistintos premios y reconocimientos disponibles en la plataforma. \n \nRecorrido del Turista   V1.0                                                              7 \n\n \nAdemás, se incorporará la opción de inicio de sesión social mediante una cuenta de Google, \nuno de los métodos más utilizados actualmente. \n \n \n \nGestión de Punto de Turismo \nLa funcionalidad “Gestión de Punto de Turismo” permitirá a los usuarios administradores \ncrear, eliminar o modificar un punto de interés dentro de la plataforma. \nAl registrar un punto turístico, el administrador deberá completar información clave como el \nnombre del sitio, una descripción detallada que destaque su relevancia o atractivo, y la \nubicación geográfica exacta, la cual se definirá mediante coordenadas o selección en un \nmapa interactivo. \nAdicionalmente, podrá asignarse un coleccionable asociado a dicho punto, lo que incentiva \nla visita de los usuarios a través de recompensas dentro del sistema de gamificación. \n \nGestión de Recorridos \nLa funcionalidad permitirá a los usuarios administradores realizar la creación, edición y \neliminación de recorridos dentro de la plataforma. \nAl dar de alta un recorrido, el administrador podrá definir su nombre, descripción, categoría \ntemática, ciudad o región, y los puntos turísticos que lo componen. Cada recorrido podrá \nincluir además una imagen representativa y un nivel de dificultad. \n \nRecorrido del Turista   V1.0                                                              8 \n\n \nLa opción de modificación permitirá actualizar la información existente, agregar o quitar \npuntos turísticos, o ajustar parámetros como el orden de visita o la temática del recorrido. \nPor otro lado, la opción de baja permitirá eliminar recorridos que ya no se encuentren \nvigentes, garantizando que la plataforma mantenga un catálogo actualizado y relevante. \n \nGestión de usuarios \nLa funcionalidad permitirá a los usuarios administradores realizar la creación, edición y \neliminación de cuentas de usuario dentro de la plataforma. \n \nVer estado de los puntos de turismo \nLa funcionalidad “Ver estado de los puntos de turismo” permitirá a los usuarios \nadministradores acceder a un panel de control con información detallada sobre cada punto \nturístico registrado en la plataforma. \nDesde esta vista, se podrán consultar métricas de interacción y desempeño, como la \ncantidad de usuarios que visitaron el punto, cuántos lo marcaron como completado, la \npuntuación promedio obtenida y la frecuencia de visitas dentro de un período determinado. \nAdemás, se podrán visualizar las fotografías subidas por los usuarios como comprobantes de \nvisita, lo que permitirá validar la actividad y evaluar la calidad de la experiencia en ese lugar. \nEsta funcionalidad tiene como propósito ofrecer una visión integral y actualizada del estado \nde cada punto turístico, facilitando la toma de decisiones respecto al mantenimiento, \npromoción o actualización de contenidos dentro de la plataforma. \n \nMétricas de la aplicación \nLa funcionalidad “Métricas de la aplicación” permitirá a los usuarios administradores \nacceder a un panel analítico con los principales indicadores de rendimiento (KPIs) de la \nplataforma. \nDesde esta sección, se podrá visualizar información clave sobre el uso general de la \naplicación, incluyendo métricas como: \n \n● \nCantidad total de usuarios activos en un período determinado. \n● \nNúmero de recorridos iniciados y completados. \n● \nCantidad de fotos o comprobantes subidos por los usuarios. \n● \nPromedio de tiempo de finalización de los recorridos. \n● \nRanking de ciudades o regiones con mayor actividad. \n \nEl sistema permitirá filtrar y segmentar los datos por fechas, tipo de recorrido, ciudad o \ncategoría, ofreciendo una visión detallada del comportamiento de los usuarios y la \nevolución de la plataforma. \n \nRecorrido del Turista   V1.0                                                              9 \n\n \n \nEntregables \nA continuación el listado de entregables del proyecto : \n● \nPlataforma móvil para turista (Android y IOS) \n● \nPlataforma web para administradores \n● \nManual de uso \n \nEquipo \n \nEl equipo propuesto por Sirius para llevar a cabo el proyecto y brindar el servicio \ncorrespondiente consiste en: \n \n \n \n \n \nDuración \nLa duración del proyecto estimado en base al alcance propuesto es de 2 meses y medio a 3 \nmeses desde la fecha de inicio. El tiempo comenzará a considerarse una vez que el cliente \npresente la lógica que el sistema deberá seguir. \n \nPara poder cumplir con los tiempos acordados, se espera una alta participación del lado del \ncliente para las validaciones del trabajo desarrollado.  \n \nRecorrido del Turista   V1.0                                                              10 \nROL RECURSOS  \nProject Management (PT) \n1 \nDesarrollador Frontend (FT) \n1 \nDesarrollador Backend (PT) \n1 \nQA (PT) \n1 \nDiseñador UX/UI (PT) \n1 \n\n \nMetodología de trabajo \nPara gestionar el proyecto, proponemos utilizar metodologías ágiles con sprints semanales \nque incluyen demostraciones del trabajo y validación del progreso. En estas sesiones de \nrevisión, se requiere la presencia del equipo Sirius y del cliente. \n \n \n \nCostos Estimados del Proyecto \nPara el desarrollo de este proyecto, contemplamos los siguientes costos. \n \nDETALLE HORAS ESTIMADAS  COSTO TOTAL \nDesarrollo del proyecto \n995 USD 39.800* \n \n*No incluye I.V.A. \n \nConsideraciones \n● La modificación del alcance mencionado en la propuesta podría afectar los plazos y \ncostos estimados. \n● La fecha de inicio del proyecto se coordinará entre las partes. \n● Los costos por infraestructura o licencias necesarias no se incluyen en el presupuesto de \neste documento, sino que corren por cuenta del cliente. \n● El costo estimado de este presupuesto tiene como referencia la cotización del dólar \nestadounidense divisa tipo vendedor publicado en la web del BNA el día de la fecha, por \nlo que está sujeto a las posibles variaciones incrementales en dicha cotización. \n \nRecorrido del Turista   V1.0                                                              11",
+  "requirements": {
+    "projectName": "Recorrido del Turista V1.0",
+    "summary": "El objetivo es desarrollar una plataforma que brinde a los turistas una experiencia de recorrido por la Ciudad de Buenos Aires más dinámica, divertida y guiada, utilizando la gamificación para incentivar la exploración de puntos turísticos y ofertas gastronómicas y culturales.",
+    "goals": [
+      "Desarrollar una aplicación móvil para turistas en Android y iOS",
+      "Incorporar gamificación para incentivar la exploración de la ciudad",
+      "Ofrecer una experiencia personalizada y organizada a través de recorridos temáticos"
+    ],
+    "constraints": [
+      "El proyecto debe ser completado en un plazo de 2 meses y medio a 3 meses",
+      "Alta participación del cliente para validaciones del trabajo desarrollado",
+      "Presupuesto limitado a 39.800 USD sin incluir I.V.A."
+    ],
+    "features": [
+      "Registro e inicio de sesión de usuario",
+      "Inicio de sesión social mediante cuenta de Google",
+      "Soporte multilenguaje (español e inglés)",
+      "Mapa interactivo con puntos turísticos precargados",
+      "Filtrado de ubicaciones por categoría",
+      "Listado de recorridos predefinidos",
+      "Sistema de puntos y reconocimientos",
+      "Detalle de ubicación con información y fotografías",
+      "Listado de coleccionables",
+      "Ranking de usuarios",
+      "Perfil de usuario personalizable",
+      "Notificaciones push",
+      "Plataforma web para administradores",
+      "Gestión de puntos turísticos y recorridos",
+      "Visualización de métricas e indicadores de rendimiento"
+    ],
+    "stakeholders": [
+      "Turistas nacionales e internacionales",
+      "Administradores de la plataforma",
+      "Artistas locales y creadores de contenido"
+    ],
+    "techHints": [
+      "Aplicación móvil para Android y iOS",
+      "Plataforma web administrativa"
+    ],
+    "scope": "El proyecto incluye el desarrollo de una plataforma móvil para turistas y una plataforma web para administradores, pero no incluye los costos por infraestructura o licencias necesarias."
+  },
+  "clarifications": [
+    "¿Cuál es el presupuesto del proyecto o restricción de costos? (ej: $X/mes para hosting, $Y presupuesto total)",
+    "¿Cuál es el plazo o fecha límite objetivo para este proyecto? (ej: lanzamiento en 6 semanas, MVP en 3 meses)",
+    "¿Cuál es la escala de usuarios o tráfico esperado? (ej: 100 usuarios, 10K usuarios activos diarios, 1M visitas/mes)"
+  ],
+  "answers": {
+    "¿Cuál es el presupuesto del proyecto o restricción de costos? (ej: $X/mes para hosting, $Y presupuesto total)": "No esta especificado",
+    "¿Cuál es el plazo o fecha límite objetivo para este proyecto? (ej: lanzamiento en 6 semanas, MVP en 3 meses)": "8 meses",
+    "¿Cuál es la escala de usuarios o tráfico esperado? (ej: 100 usuarios, 10K usuarios activos diarios, 1M visitas/mes)": "el trafico esperado es de 200 usuarios diarios"
+  },
+  "tickets": [
+    {
+      "id": "TICKET-001",
+      "title": "Configurar proyecto en Android e iOS",
+      "description": "Inicializar los proyectos en Android Studio y Xcode para soportar la aplicación móvil en ambas plataformas. Es fundamental para comenzar el desarrollo de la aplicación móvil que será utilizada por los turistas.",
+      "acceptanceCriteria": [
+        "El proyecto de Android se puede abrir y ejecutar en Android Studio",
+        "El proyecto de iOS se puede abrir y ejecutar en Xcode",
+        "La aplicación se inicia sin errores en ambos emuladores"
+      ],
+      "effortPoints": 5,
+      "useCase": "Desarrollar una aplicación móvil para turistas en Android y iOS",
+      "priority": "P1",
+      "labels": [
+        "infraestructura",
+        "android",
+        "ios"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TICKET-002",
+      "title": "Implementar sistema de autenticación de usuarios",
+      "description": "Desarrollar el sistema de autenticación que permita a los usuarios registrarse e iniciar sesión en la aplicación. Esto incluye soporte para registro e inicio de sesión tradicional, así como inicio de sesión social con cuenta de Google. Es crucial para personalizar la experiencia del usuario y asegurar sus datos.",
+      "acceptanceCriteria": [
+        "Los usuarios pueden registrarse utilizando su correo electrónico",
+        "Los usuarios pueden iniciar sesión con su correo electrónico o con su cuenta de Google",
+        "Los datos de usuario se almacenan de forma segura"
+      ],
+      "effortPoints": 8,
+      "useCase": "Registro e inicio de sesión de usuario",
+      "priority": "P1",
+      "labels": [
+        "backend",
+        "autenticación",
+        "seguridad"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TICKET-003",
+      "title": "Implementar soporte multilenguaje",
+      "description": "Añadir soporte para español e inglés en la aplicación, permitiendo a los usuarios seleccionar su idioma preferido. Esto mejorará la accesibilidad y usabilidad de la aplicación para turistas nacionales e internacionales.",
+      "acceptanceCriteria": [
+        "Los usuarios pueden seleccionar su idioma preferido",
+        "La aplicación muestra el contenido en el idioma seleccionado",
+        "El cambio de idioma se puede realizar en cualquier momento desde la configuración"
+      ],
+      "effortPoints": 5,
+      "useCase": "Soporte multilenguaje",
+      "priority": "P2",
+      "labels": [
+        "frontend",
+        "i18n"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TICKET-004",
+      "title": "Desarrollar mapa interactivo con puntos turísticos",
+      "description": "Implementar un mapa interactivo que muestre puntos turísticos precargados en la Ciudad de Buenos Aires. Los usuarios podrán interactuar con el mapa para explorar diferentes atracciones. Es esencial para la funcionalidad principal de la aplicación de ofrecer una experiencia de recorrido dinámica.",
+      "acceptanceCriteria": [
+        "Los usuarios pueden visualizar un mapa interactivo con puntos turísticos",
+        "Al seleccionar un punto turístico, se muestra información detallada",
+        "El mapa permite zoom y desplazamiento"
+      ],
+      "effortPoints": 8,
+      "useCase": "Mapa interactivo con puntos turísticos precargados",
+      "priority": "P1",
+      "labels": [
+        "frontend",
+        "mapas",
+        "UX"
+      ],
+      "dependencies": [
+        "TICKET-001"
+      ]
+    },
+    {
+      "id": "TICKET-005",
+      "title": "Implementar filtrado de ubicaciones por categoría",
+      "description": "Permitir a los usuarios filtrar los puntos turísticos y recorridos en el mapa por categorías (por ejemplo, gastronomía, cultura, etc.). Esto ayudará a los usuarios a personalizar su experiencia de exploración según sus intereses.",
+      "acceptanceCriteria": [
+        "Los usuarios pueden seleccionar categorías para filtrar puntos turísticos y recorridos",
+        "El mapa actualiza los puntos visibles según la categoría seleccionada",
+        "El filtrado es rápido y preciso"
+      ],
+      "effortPoints": 5,
+      "useCase": "Filtrado de ubicaciones por categoría",
+      "priority": "P2",
+      "labels": [
+        "frontend",
+        "filtro",
+        "UX"
+      ],
+      "dependencies": [
+        "TICKET-004"
+      ]
+    }
+  ],
+  "justification": {
+    "pros": [
+      "Dividir el proyecto en tickets manejables permite un enfoque iterativo y ágil, facilitando la gestión del proyecto.",
+      "La asignación de prioridades ayuda a asegurar que el trabajo crítico se complete primero, alineando el desarrollo con los objetivos del proyecto.",
+      "La especificación de dependencias entre tickets garantiza una secuencia lógica de desarrollo, minimizando bloqueos y retrabajos."
+    ],
+    "cons": [
+      "La estimación de puntos de esfuerzo puede ser subjetiva y variar a medida que el equipo avanza en el proyecto.",
+      "La división de tickets puede llevar a una visión fragmentada del proyecto, requiriendo una coordinación cuidadosa para mantener una visión integral.",
+      "Determinar las prioridades puede ser desafiante en proyectos con múltiples stakeholders y necesidades en competencia."
+    ],
+    "alternatives": [
+      "Desarrollo basado en sprints con historias de usuario más grandes, permitiendo una planificación más flexible y adaptativa.",
+      "Enfoque Kanban, priorizando el flujo continuo de trabajo sobre la planificación iterativa, lo que podría ser más adecuado para proyectos con requisitos cambiantes."
+    ]
+  },
+  "cost": {
+    "tokensIn": 2918,
+    "tokensOut": 2265,
+    "usd": 0.09713
+  },
+  "createdAt": "2025-11-11T18:48:32.802Z",
+  "updatedAt": "2025-11-11T18:55:38.626Z"
+}
